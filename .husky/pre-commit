@@ -1,0 +1,5 @@
+echo "Running lint for affected workspaces..."
+npx --no-install turbo run lint --filter=...[HEAD]
+
+echo "Running lint-staged..."
+npx --no-install lint-staged

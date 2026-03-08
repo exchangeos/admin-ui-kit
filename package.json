@@ -1,22 +1,78 @@
 {
-  "name": "with-tailwind",
-  "private": true,
-  "scripts": {
-    "build": "turbo run build",
-    "dev": "turbo run dev",
-    "lint": "turbo run lint",
-    "check-types": "turbo run check-types",
-    "format": "prettier --write \"**/*.{ts,tsx,md}\""
-  },
+  "name": "admin-ui-kit",
   "devDependencies": {
-    "prettier": "^3.6.0",
-    "prettier-plugin-tailwindcss": "^0.7.1",
+    "@commitlint/cli": "^20.4.3",
+    "@commitlint/config-conventional": "^20.4.3",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.3.2",
+    "prettier": "^3.8.1",
+    "prettier-plugin-tailwindcss": "^0.7.2",
+    "pretty-quick": "^4.2.2",
+    "rimraf": "^6.0.1",
+    "syncpack": "^14.0.1",
     "turbo": "^2.8.14"
   },
   "engines": {
     "node": ">=18"
   },
+  "lint-staged": {
+    "*.{js,jsx,mjs,cjs,mts,cts,ts,tsx}": [
+      "eslint --fix",
+      "prettier --write"
+    ],
+    "*.{json,css,md,mdx,yml,yaml}": [
+      "prettier --write --ignore-unknown"
+    ]
+  },
   "packageManager": "npm@11.8.0",
+  "private": true,
+  "scripts": {
+    "affected": "turbo run build lint type-check test --filter=...[HEAD^1]",
+    "build": "turbo run build",
+    "build:apps": "turbo run build --filter=./apps/*",
+    "build:packages": "turbo run build --filter=./packages/*",
+    "check": "npm run format:check && npm run lint && npm run type-check",
+    "ci": "npm run clean && npm run format:check && turbo run lint type-check test build",
+    "ci:fast": "turbo run lint type-check build --parallel",
+    "clean": "turbo run clean --force && rimraf --glob ./.turbo ./apps/*/.turbo ./apps/*/.next ./apps/*/dist ./packages/*/dist ./packages/*/.next ./packages/*/.turbo",
+    "clean:coverage": "rimraf --glob ./coverage ./apps/*/coverage ./packages/*/coverage",
+    "clean:full": "rimraf --glob ./node_modules ./.turbo ./apps/*/node_modules ./packages/*/node_modules ./apps/*/.turbo ./apps/*/.next ./apps/*/dist ./packages/*/dist ./packages/*/.next ./packages/*/.turbo ./package-lock.json",
+    "dev": "turbo run dev --parallel",
+    "dev:affected": "turbo run dev --filter=...[HEAD^1]",
+    "dev:web": "turbo run dev --filter=@admin-app/web",
+    "fix": "npm run lint:fix && npm run format",
+    "format": "prettier --cache --write \"**/*\" --ignore-unknown",
+    "format:check": "prettier --check \"**/*\" --ignore-unknown",
+    "format:staged": "pretty-quick --staged",
+    "lint": "turbo run lint",
+    "lint:apps": "turbo run lint --filter=./apps/*",
+    "lint:fix": "turbo run lint:fix",
+    "lint:packages": "turbo run lint --filter=./packages/*",
+    "prepare": "husky",
+    "sync:fix": "syncpack fix --dependency-types prod,dev,peer,resolutions",
+    "sync:format": "syncpack format",
+    "sync:lint": "syncpack lint",
+    "sync:list": "syncpack list --dependency-types prod,dev,peer,resolutions",
+    "sync:list:dev": "syncpack lint --dependency-types dev",
+    "sync:list:prod": "syncpack lint --dependency-types prod",
+    "sync:update": "syncpack update",
+    "test": "turbo run test",
+    "test:apps": "turbo run test --filter=./apps/*",
+    "test:coverage": "turbo run test:coverage",
+    "test:e2e": "turbo run test:e2e",
+    "type-check": "turbo run type-check",
+    "type-check:apps": "turbo run type-check --filter=./apps/*",
+    "type-check:packages": "turbo run type-check --filter=./packages/*",
+    "type-check:watch": "turbo run type-check -- --watch",
+    "verify": "npm run format:check && npm run lint && npm run type-check && npm run test",
+    "web:build": "npm run build --workspace @admin-app/web",
+    "web:dev": "npm run dev --workspace @admin-app/web",
+    "web:lint": "npm run lint --workspace @admin-app/web",
+    "web:test": "npm run test --workspace @admin-app/web",
+    "web:test:e2e": "npm run test:e2e --workspace @admin-app/web",
+    "web:test:e2e:ui": "npm run test:e2e:ui --workspace @admin-app/web",
+    "workspace:info": "npm list --workspaces --depth=0"
+  },
   "workspaces": [
     "apps/*",
     "packages/*"

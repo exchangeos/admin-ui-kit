@@ -1,14 +1,30 @@
 {
-  "name": "@repo/tailwind-config",
+  "name": "@admin-app/tailwind-config",
   "version": "0.0.0",
-  "type": "module",
-  "private": true,
-  "exports": {
-    ".": "./shared-styles.css",
-    "./postcss": "./postcss.config.js"
+  "dependencies": {
+    "@tailwindcss/forms": "^0.5.11",
+    "@tailwindcss/postcss": "^4.2.1",
+    "@tailwindcss/typography": "^0.5.19",
+    "autoprefixer": "^10.4.27",
+    "clsx": "^2.1.1",
+    "postcss": "^8.5.6",
+    "tailwind-merge": "^3.5.0",
+    "tailwindcss": "^4.2.1",
+    "tailwindcss-animate": "^1.0.7"
   },
-  "devDependencies": {
-    "postcss": "^8.5.3",
-    "tailwindcss": "^4.1.5"
-  }
+  "exports": {
+    ".": "./tailwind.config.ts",
+    "./cn": "./cn.ts",
+    "./globals.css": "./globals.css",
+    "./postcss": "./postcss.config.mjs",
+    "./tailwind": "./tailwind.config.ts"
+  },
+  "files": [
+    "globals.css",
+    "postcss.config.mjs",
+    "tailwind.config.ts"
+  ],
+  "main": "./tailwind.config.ts",
+  "private": true,
+  "type": "module"
 }
