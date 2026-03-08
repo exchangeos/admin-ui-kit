@@ -3,6 +3,7 @@
   "devDependencies": {
     "@commitlint/cli": "^20.4.3",
     "@commitlint/config-conventional": "^20.4.3",
+    "eslint": "^9.39.1",
     "husky": "^9.1.7",
     "lint-staged": "^16.3.2",
     "prettier": "^3.8.1",
@@ -44,7 +45,7 @@
     "format": "prettier --cache --write \"**/*\" --ignore-unknown",
     "format:check": "prettier --check \"**/*\" --ignore-unknown",
     "format:staged": "pretty-quick --staged",
-    "lint": "turbo run lint",
+    "lint": "turbo run lint --no-cache",
     "lint:apps": "turbo run lint --filter=./apps/*",
     "lint:fix": "turbo run lint:fix",
     "lint:packages": "turbo run lint --filter=./packages/*",
